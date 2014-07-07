@@ -92,11 +92,11 @@ class ServiceCatalog(object):
 class ServiceCatalogV3(object):
 
     def __init__(self, resp, resource_dict):
-        self.resp = resp.headers
+        self.headers = resp.headers
         self.catalog = resource_dict
 
     def get_token(self):
-        return self.resp['x-subject-token']
+        return self.headers['x-subject-token']
 
     def url_for(self, attr=None, filter_value=None,
                 service_type='kv-storage', endpoint_type='public'):
