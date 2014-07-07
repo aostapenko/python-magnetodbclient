@@ -92,7 +92,7 @@ class ServiceCatalog(object):
 class ServiceCatalogV3(object):
 
     def __init__(self, resp, resource_dict):
-        self.resp = resp
+        self.resp = resp.headers
         self.catalog = resource_dict
 
     def get_token(self):
@@ -335,11 +335,6 @@ class HTTPClient(object):
         resp, body = self._cs_request(req_url, 'POST',
                                       headers=headers, body=body)
 
-        if body:
-            try:
-                body = json.loads(body)
-            except ValueError:
-                pass
         self._extract_service_catalog_v3(resp, body)
 
     def _authenticate_keystone(self):
