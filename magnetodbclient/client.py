@@ -206,7 +206,7 @@ class HTTPClient(object):
             body = None
 
         if resp.status_code >= 400:
-            raise exceptions.from_response(resp, body)
+            raise exceptions.from_response(resp, body, url)
 
         return resp, body
 
