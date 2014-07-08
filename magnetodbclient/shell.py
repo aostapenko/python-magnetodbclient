@@ -84,6 +84,7 @@ COMMAND_V1 = {
     'scan': item.Scan,
     'batch-write': item.BatchWrite,
     'batch-get': item.BatchGet,
+    'bulk-load': item.BulkLoad,
 }
 
 COMMANDS = {'1': COMMAND_V1}

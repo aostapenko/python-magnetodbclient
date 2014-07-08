@@ -133,6 +133,7 @@ class Client(object):
     scan_path = table_path + "/scan"
     batch_write_item_path = base_path + "/batch_write_item"
     batch_get_item_path = base_path + "/batch_get_item"
+    bulk_load_path = table_path + "/bulk_load"
 
     # 8192 Is the default max URI len for eventlet.wsgi.server
     MAX_URI_LEN = 8192
@@ -185,6 +186,10 @@ class Client(object):
         """Batch get item."""
         return self.post(self.batch_get_item_path, request_items)
 
+    def bulk_load(self, table_name, request_body):
+        """Load data to the specified table."""
+        return self.post(self.bulk_load_path % table_name, request_body)
+
     def __init__(self, **kwargs):
         """Initialize a new client for the MagnetoDB v1 API."""
         super(Client, self).__init__()
@@ -212,7 +217,7 @@ class Client(object):
         self.httpclient.authenticate_and_fetch_endpoint_url()
         self._check_uri_length(action)
 
-        if body:
+        if body and not isinstance(body, file):
             body = self.serialize(body)
         self.httpclient.content_type = self.content_type
         resp, replybody = self.httpclient.do_request(action, method, body=body)

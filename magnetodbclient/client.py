@@ -145,7 +145,7 @@ class HTTPClient(object):
         self.domain_id = domain_id or 'default'
         self.password = password
         self.auth_url = auth_url.rstrip('/') if auth_url else None
-        self.service_type = service_type
+        self.service_type = 'kv-streaming'
         self.endpoint_type = endpoint_type
         self.region_name = region_name
         self.auth_token = token
@@ -396,7 +396,7 @@ class HTTPClient(object):
 
         body = json.loads(body)
         for endpoint in body.get('endpoints', []):
-            if (endpoint['type'] == 'kv-storage' and
+            if (endpoint['type'] == self.endpoint_type and
                 endpoint.get('region') == self.region_name):
                 if self.endpoint_type not in endpoint:
                     raise exceptions.EndpointTypeNotFound(
